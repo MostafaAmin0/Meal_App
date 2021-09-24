@@ -12,15 +12,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Meal App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
+      title: 'Meal App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('DeleiMeal'),
         ),
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text('DleiMeal'),
-          ),
-          body: CategoriesScreen(),
-        ));
+        body: CategoriesScreen(),
+      ),
+    );
   }
 }
