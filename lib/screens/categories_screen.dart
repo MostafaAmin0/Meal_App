@@ -21,6 +21,7 @@ class CategoriesScreen extends StatelessWidget {
             (element) => CategoryItem(element),
           )
           .toList(),
+      padding: const EdgeInsets.all(25.0),
     );
   }
 }

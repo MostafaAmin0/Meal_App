@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meal_app/models/category.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem(this.category,{Key? key}) : super(key: key);
+  const CategoryItem(this.category, {Key? key}) : super(key: key);
 
   final Category category;
 
@@ -10,7 +10,12 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(15),
-      child: Center(child: Text(category.title)),
+      child: Center(
+        child: Text(
+          category.title,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
