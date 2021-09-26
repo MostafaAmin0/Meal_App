@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/screens/category_meals_screen.dart';
 
 import 'screens/categories_screen.dart';
 
@@ -27,12 +28,11 @@ class MyApp extends StatelessWidget {
               ),
             ),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('DeleiMeal'),
-        ),
-        body: CategoriesScreen(),
-      ),
+      routes: {
+        '/' :(ctx)=> CategoriesScreen(),
+        CategoryMeals.route: (ctx) => CategoryMeals(),
+      },
+      // home: CategoriesScreen(),
     );
   }
 }
