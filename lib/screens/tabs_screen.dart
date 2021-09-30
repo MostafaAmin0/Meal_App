@@ -9,29 +9,52 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
+  final List<Map<String, Object>> _pages = const [
+    {
+      'screen': CategoriesScreen(),
+      'title': 'Categories',
+    },
+    {
+      'screen': Center(child: Text('Fav')),
+      'title': 'Your Fav',
+    },
+  ];
+
+  int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Meals'),
-          bottom: const TabBar(tabs: [
-            Tab(
-              icon: Icon(Icons.category),
-              text: 'Categories',
-            ),
-            Tab(
-              icon: Icon(Icons.star),
-              text: 'Fav',
-            ),
-          ]),
-        ),
-        body: const TabBarView(children: [
-          CategoriesScreen(),
-          Center(child:Text('fav')),
-        ],),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_pages[_selectedIndex]['title'] as String),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index) => setState(() {
+          _selectedIndex = index;
+        }),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        unselectedItemColor: Colors.white,
+        selectedItemColor: Theme.of(context).colorScheme.secondary,
+        currentIndex: _selectedIndex,
+        type: BottomNavigationBarType.shifting,
+        items: [
+          BottomNavigationBarItem(
+            ///for type [shifted]
+            backgroundColor: Theme.of(context).colorScheme.primary,
+
+            icon: const Icon(Icons.category),
+            label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            /// for type [shifted]
+            backgroundColor: Theme.of(context).colorScheme.primary,
+
+            icon: const Icon(Icons.star),
+            label: 'Favorite',
+          )
+        ],
+      ),
+      body: _pages[_selectedIndex]['screen'] as Widget,
     );
   }
 }
