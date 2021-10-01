@@ -7,7 +7,7 @@ import 'package:meal_app/screens/tabs_screen.dart';
 import 'screens/categories_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -32,21 +32,21 @@ class MyApp extends StatelessWidget {
             ),
       ),
       routes: {
-        '/' :(ctx)=> TabsScreen(),
-        CategoryMeals.route: (ctx) => CategoryMeals(),
-        MealDetail.route : (ctx) => MealDetail(),
-        FilterScreen.route : (ctx)=> FilterScreen(),
+        '/' :(ctx)=> const TabsScreen(),
+        CategoryMeals.route: (ctx) =>const CategoryMeals(),
+        MealDetail.route : (ctx) =>const MealDetail(),
+        FilterScreen.route : (ctx)=>const FilterScreen(),
       },
       // home: CategoriesScreen(),
 
       onGenerateRoute: (settings){
         // ignore: avoid_print
         print(settings.name);
-        return MaterialPageRoute(builder: (ctx)=>CategoriesScreen()); 
+        return MaterialPageRoute(builder: (ctx)=>const CategoriesScreen()); 
       },
 
       onUnknownRoute: (settings){
-        return MaterialPageRoute(builder: (ctx)=>CategoriesScreen());
+        return MaterialPageRoute(builder: (ctx)=>const CategoriesScreen());
       },
 
     );
