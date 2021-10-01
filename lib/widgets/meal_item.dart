@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
+
 import 'package:meal_app/screens/meal_detail_screen.dart';
 import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem(this.meal, {Key? key}) : super(key: key);
+  const MealItem(this.meal, {Key? key, required this.removeItem})
+      : super(key: key);
 
   final Meal meal;
+  final Function(Meal) removeItem;
+
+  void selectedMeal(BuildContext context) {
+    Navigator.of(context)
+        .pushNamed(
+      MealDetail.route,
+      arguments: meal,
+    )
+        .then(
+      (value) {
+        if (value != null) removeItem(value as Meal);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).pushNamed(
-        MealDetail.route,
-        arguments: meal,
-      ),
+      onTap: () => selectedMeal(context),
       child: Card(
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),

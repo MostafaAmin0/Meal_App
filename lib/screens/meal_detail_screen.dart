@@ -49,7 +49,8 @@ class MealDetail extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            buildTitleContainer(context, 'Ingrediants : ${meal.ingredients.length}'),
+            buildTitleContainer(
+                context, 'Ingrediants : ${meal.ingredients.length}'),
             buildContainer(
               child: ListView.builder(
                 itemBuilder: (ctx, index) {
@@ -77,7 +78,9 @@ class MealDetail extends StatelessWidget {
                         ),
                         title: Text(meal.steps[index]),
                       ),
-                      const Divider(thickness: 2,),
+                      const Divider(
+                        thickness: 2,
+                      ),
                     ],
                   );
                 },
@@ -86,6 +89,10 @@ class MealDetail extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.delete),
+        onPressed: () => Navigator.of(context).pop(meal),
       ),
     );
   }
