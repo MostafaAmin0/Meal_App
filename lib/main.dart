@@ -1,17 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/dummy_data.dart';
+import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/category_meals_screen.dart';
 import 'package:meal_app/screens/filter_screen.dart';
 import 'package:meal_app/screens/meal_detail_screen.dart';
 import 'package:meal_app/screens/tabs_screen.dart';
 
+import 'models/filters.dart';
 import 'screens/categories_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Filters _filters =
+      Filters(gluten: false, vegan: false, vegetarian: false, lactose: false);
+
+  List<Meal> _availableMeals = kDummyMeals;
+
+  void _saveFilters(Filters newFilters) {
+    setState(() {
+      _filters = newFilters;
+
+      _availableMeals=kDummyMeals.where((element) {
+        if ((_filters.gluten && !element.isGlutenFree) ||
+            (_filters.lactose && !element.isLactoseFree) ||
+            (_filters.vegan && !element.isVegan) ||
+            (_filters.vegetarian && !element.isVegetarian)) {
+          return false;
+        }
+        return true;
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,23 +61,22 @@ class MyApp extends StatelessWidget {
             ),
       ),
       routes: {
-        '/' :(ctx)=> const TabsScreen(),
-        CategoryMeals.route: (ctx) =>const CategoryMeals(),
-        MealDetail.route : (ctx) =>const MealDetail(),
-        FilterScreen.route : (ctx)=>const FilterScreen(),
+        '/': (ctx) => const TabsScreen(),
+        CategoryMeals.route: (ctx) => CategoryMeals(_availableMeals),
+        MealDetail.route: (ctx) => const MealDetail(),
+        FilterScreen.route: (ctx) => FilterScreen(_filters,_saveFilters),
       },
       // home: CategoriesScreen(),
 
-      onGenerateRoute: (settings){
+      onGenerateRoute: (settings) {
         // ignore: avoid_print
         print(settings.name);
-        return MaterialPageRoute(builder: (ctx)=>const CategoriesScreen()); 
+        return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
       },
 
-      onUnknownRoute: (settings){
-        return MaterialPageRoute(builder: (ctx)=>const CategoriesScreen());
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
       },
-
     );
   }
 }

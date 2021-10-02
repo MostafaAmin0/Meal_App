@@ -1,20 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:meal_app/models/filters.dart';
+import 'package:meal_app/screens/categories_screen.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
 
 class FilterScreen extends StatefulWidget {
-  const FilterScreen({Key? key}) : super(key: key);
+  const FilterScreen(this.filters,this.saveFilters, {Key? key}) : super(key: key);
 
   static const route = '/filter-screen';
+  final Function(Filters) saveFilters;
+  final Filters filters;
 
   @override
   State<FilterScreen> createState() => _FilterScreenState();
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  bool _isGlutenFree = false;
-  bool _isVegan = false;
-  bool _isVegetarian = false;
-  bool _isLactoseFree = false;
+  late bool _isGlutenFree;
+  late bool _isVegan ;
+  late bool _isVegetarian ;
+  late bool _isLactoseFree ;
+
+  @override
+  void initState() {
+    super.initState();
+    _isGlutenFree=widget.filters.gluten;
+    _isVegan=widget.filters.vegan;
+    _isLactoseFree=widget.filters.lactose;
+    _isVegetarian=widget.filters.vegetarian;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +92,20 @@ class _FilterScreenState extends State<FilterScreen> {
         ],
       ),
       drawer: const MainDrawer(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.save),
+        onPressed: () { widget.saveFilters(
+          Filters(
+            gluten: _isGlutenFree,
+            vegan: _isVegan,
+            vegetarian: _isVegetarian,
+            lactose: _isLactoseFree,
+          ),
+        );
+        Navigator.of(context).pushReplacementNamed('/');
+        },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -90,7 +117,7 @@ class _FilterScreenState extends State<FilterScreen> {
       activeTrackColor: Colors.pink[200],
       title: Text('$title-Free'),
       subtitle: Text('Only include $title free meals'),
-      onChanged: (newValue){
+      onChanged: (newValue) {
         changeState(newValue);
       },
     );

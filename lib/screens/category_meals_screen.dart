@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-
-import 'package:meal_app/dummy_data.dart';
+ 
 import 'package:meal_app/models/category.dart';
 import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/widgets/meal_item.dart';
 
 class CategoryMeals extends StatefulWidget {
-  const CategoryMeals({Key? key}) : super(key: key);
+  const CategoryMeals(this.availableMeals,{Key? key}) : super(key: key);
 
   static const route = '/category-meals';
+  final List<Meal>availableMeals;
 
   @override
   State<CategoryMeals> createState() => _CategoryMealsState();
@@ -23,8 +23,8 @@ class _CategoryMealsState extends State<CategoryMeals> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     category = ModalRoute.of(context)!.settings.arguments as Category;
-
-    filteredMeals = kDummyMeals.where(
+ 
+    filteredMeals = widget.availableMeals.where(
       (meal) {
         return meal.myCategories.contains(category.id);
       },
