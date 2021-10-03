@@ -31,11 +31,11 @@ class _CategoryMealsState extends State<CategoryMeals> {
     ).toList();
   }
 
-  void _removeMeal(Meal meal) {
-    setState(() {
-      filteredMeals.remove(meal);
-    });
-  }
+  // void _removeMeal(Meal meal) {
+  //   setState(() {
+  //     filteredMeals.remove(meal);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _CategoryMealsState extends State<CategoryMeals> {
         itemBuilder: (ctx, index) {
           return MealItem(
             filteredMeals[index],
-            removeItem: _removeMeal,
+            // removeItem: _removeMeal,
           );
         },
         itemCount: filteredMeals.length,

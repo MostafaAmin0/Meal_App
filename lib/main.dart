@@ -25,12 +25,13 @@ class _MyAppState extends State<MyApp> {
       Filters(gluten: false, vegan: false, vegetarian: false, lactose: false);
 
   List<Meal> _availableMeals = kDummyMeals;
+  List<Meal> _favoriteMeals = [];
 
   void _saveFilters(Filters newFilters) {
     setState(() {
       _filters = newFilters;
 
-      _availableMeals=kDummyMeals.where((element) {
+      _availableMeals = kDummyMeals.where((element) {
         if ((_filters.gluten && !element.isGlutenFree) ||
             (_filters.lactose && !element.isLactoseFree) ||
             (_filters.vegan && !element.isVegan) ||
@@ -41,6 +42,22 @@ class _MyAppState extends State<MyApp> {
       }).toList();
     });
   }
+
+  void _togglefavorite(Meal meal) {
+    final index = _favoriteMeals.indexOf(meal);
+    setState(() {
+      if (index == -1) {
+        _favoriteMeals.add(meal);
+      } else {
+        _favoriteMeals.removeAt(index);
+      }
+    });
+  }
+
+  bool _isFavorite(Meal meal){
+    return _favoriteMeals.contains(meal);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +78,10 @@ class _MyAppState extends State<MyApp> {
             ),
       ),
       routes: {
-        '/': (ctx) => const TabsScreen(),
+        '/': (ctx) => TabsScreen(_favoriteMeals),
         CategoryMeals.route: (ctx) => CategoryMeals(_availableMeals),
-        MealDetail.route: (ctx) => const MealDetail(),
-        FilterScreen.route: (ctx) => FilterScreen(_filters,_saveFilters),
+        MealDetail.route: (ctx) => MealDetail(_togglefavorite,_isFavorite),
+        FilterScreen.route: (ctx) => FilterScreen(_filters, _saveFilters),
       },
       // home: CategoriesScreen(),
 

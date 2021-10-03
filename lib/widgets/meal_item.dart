@@ -4,11 +4,11 @@ import 'package:meal_app/screens/meal_detail_screen.dart';
 import '../models/meal.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem(this.meal, {Key? key, required this.removeItem})
+  const MealItem(this.meal, {Key? key,/* required this.removeItem*/})
       : super(key: key);
 
   final Meal meal;
-  final Function(Meal) removeItem;
+  // final Function(Meal) removeItem;
 
   void selectedMeal(BuildContext context) {
     Navigator.of(context)
@@ -18,7 +18,7 @@ class MealItem extends StatelessWidget {
     )
         .then(
       (value) {
-        if (value != null) removeItem(value as Meal);
+        // if (value != null) //removeItem(value as Meal);
       },
     );
   }
